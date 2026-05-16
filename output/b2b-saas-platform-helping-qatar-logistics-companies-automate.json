@@ -1,68 +1,68 @@
 {
   "market_brief": {
     "segments": [
-      "Mid-size Qatari freight forwarders managing multi-modal customs documentation manually (air, sea, and land)",
-      "Third-party logistics (3PL) operators running last-mile dispatch and e-commerce fulfilment out of Doha and Qatar Free Zones",
-      "Oil & gas and industrial sector importers relying on bonded warehouse and AEO customs workflows",
-      "Food & FMCG supply chain operators dependent on time-sensitive customs clearance through Hamad Port",
-      "SME importers and exporters entering or scaling across GCC markets via Qatar as a transshipment hub"
+      "Qatar-based freight forwarders managing cross-border GCC and transshipment cargo via Hamad Port — primary adopters of customs doc automation",
+      "Mid-market 3PLs in Qatar and the GCC offering e-commerce fulfillment, last-mile dispatch, and contract logistics to retail and FMCG brands",
+      "Energy-sector logistics operators (oil, gas, petrochemicals) requiring HS code compliance, bonded cargo, and hazmat documentation workflows",
+      "GCC customs brokers and clearing agents handling high volumes of HS code classification, duty calculations, and single-window filings",
+      "Regional logistics arms of multinational manufacturers managing multi-country GCC distribution with fragmented ERP and TMS stacks"
     ],
     "pain_points": [
-      "Heavy reliance on manual, paper-based customs documentation leads to high error rates and clearance delays — automated document processing can cut manual entry errors from ~40% to under 1%, but most Qatari forwarders have not yet adopted such tools",
-      "System fragmentation: different stakeholders across the logistics chain use incompatible platforms, making data sharing between freight forwarders, customs authorities, and 3PLs complex and error-prone",
-      "Last-mile dispatch coordination remains largely manual and phone-driven, causing backhauling inefficiencies and missed delivery windows — road operators face margin squeeze from back-haul deficits",
-      "Regulatory compliance complexity: Qatari customs procedures, AEO requirements, and evolving GCC trade regulations require constant manual monitoring, creating non-compliance risk and demurrage exposure",
-      "Throughput pressure at Hamad Port (557,464 TEUs in 2023 alone) is straining existing documentation workflows, while inland logistics parks at Umm Salal and Bu Fasseela still lack integrated digital customs infrastructure"
+      "Manual customs documentation — spreadsheets and email chains across customs brokers, forwarders, and port authorities — causes delays and errors, especially as the GCC Integrated Customs Tariff added 5,600 new HS codes effective January 2025",
+      "No standardized geocoding in many GCC residential and commercial zones makes last-mile dispatch coordination error-prone, requiring manual address resolution and driver re-routing",
+      "Fragmented handoff between freight forwarders (customs clearance) and 3PLs (last-mile) creates coordination gaps: receiving schedules, container unloading times, and inventory transfers are managed across separate systems with no unified data layer",
+      "Legacy ERP and TMS platforms lack real-time customs status visibility, forcing operations teams to chase clearance updates manually rather than triggering dispatch workflows automatically",
+      "Varying customs procedures and compliance rules across the six GCC member states force forwarders to maintain separate filing workflows per country, adding cost and extending lead times"
     ],
     "key_players": [
-      "GWC (Gulf Warehousing Company): Qatar's largest 3PL and logistics provider with 3.8M sqm of infrastructure, GCC AEO status, and active investment in AI and e-commerce logistics automation",
-      "Milaha (Qatar Navigation Q.P.S.C.): Qatar's oldest and most diversified maritime and logistics group, recently accredited as AEO by Qatar Customs and actively building AI and Google Cloud-powered logistics capabilities",
-      "Bin Yousef Cargo: Long-established Doha-based freight forwarder and 3PL with AEO accreditation, TIR certification, and recently opened Ras Bufontas Free Zone warehouse",
-      "Kuehne+Nagel Qatar: Global freight forwarding leader with a Doha office, strong air and sea logistics capabilities, and recently unified under a new GCC+ cluster management structure",
-      "CargoWise / Descartes Systems: Global logistics SaaS platforms used by large forwarders for customs compliance and documentation automation — not yet deeply embedded in mid-tier Qatari market"
+      "GWC (Gulf Warehousing Company): Qatar's largest logistics provider with freight forwarding, customs clearance, last-mile delivery, and e-commerce fulfillment — actively investing in AI-driven route optimization and digital fleet management",
+      "Milaha (Qatar Navigation Q.P.S.C.): Qatar's dominant maritime and logistics conglomerate offering integrated freight forwarding, customs clearance, port management, and supply chain solutions; signed Oracle and Google Cloud MoUs to accelerate digital transformation",
+      "Aramex: GCC-wide freight forwarding and last-mile operator undergoing 'Accelerate28' transformation, recently restructured into separate Express and Logistics B2B divisions with dedicated GCC commercial and operations teams",
+      "Kuehne+Nagel (GCC+ Cluster): Global forwarder with active Qatar operations, newly appointed MD Leon Diradourian effective June 2025, and a customs development background; operates e-commerce fulfillment hub in Dubai targeting GCC-wide customers",
+      "CargoWise (WiseTech Global): Enterprise SaaS incumbent for customs clearance and freight management in 190+ countries — the primary global platform legacy forwarders are locked into, making GCC-native, lighter-weight alternatives a credible wedge"
     ]
   },
   "call_targets": [
-    {
-      "name": "Jiju Haneef",
-      "company": "Bin Yousef Cargo",
-      "role": "Director, Cargo Operations",
-      "location": "Doha, Qatar",
-      "rationale": "Jiju is the operational decision-maker for one of Qatar's longest-standing independent freight forwarders. He was publicly quoted at the September 2025 opening of their new Ras Bufontas Free Zone warehouse — a facility handling import/export for Baladna and expanding 3PL services — making him a direct buyer of customs documentation and last-mile dispatch tools."
-    },
     {
       "name": "Matthew Kearns",
       "company": "GWC (Gulf Warehousing Company)",
       "role": "Group CEO",
       "location": "Doha, Qatar",
-      "rationale": "As the newly appointed Group CEO of Qatar's dominant 3PL, Matthew has publicly stated that GWC's priority is transforming its assets into an integrated logistics platform with AI, automation, and e-commerce dispatch. His Q1 2026 commentary explicitly called out documentation and dispatch coordination under regional disruption as key operational pressure points."
+      "rationale": "Recently confirmed Group CEO after serving as Acting CEO; GWC is Qatar's largest 3PL and freight forwarder, publicly investing in AI-powered dispatch, last-mile automation, and customs documentation workflows. Kearns has spoken directly about building an 'integrated logistics platform' — exactly the layer this SaaS product targets."
     },
     {
-      "name": "Bradley Francis",
-      "company": "Kuehne+Nagel Qatar",
-      "role": "Managing Director, Qatar",
+      "name": "Sheikh Abdulla Bin Fahad Bin Jassim Al Thani",
+      "company": "GWC (Gulf Warehousing Company)",
+      "role": "Group Managing Director",
       "location": "Doha, Qatar",
-      "rationale": "Bradley was appointed MD of Kuehne+Nagel Qatar in 2023 and has been growing the country operation's air and sea forwarding capabilities with a strong focus on end-to-end supply chain visibility. His role overseeing Qatar operations within the newly formed GCC+ cluster (effective June 2025) makes him a valuable voice on customs automation needs across multi-market freight flows."
-    },
-    {
-      "name": "Fahad bin Saad Al-Qahtani",
-      "company": "Milaha (Qatar Navigation Q.P.S.C.)",
-      "role": "Group CEO",
-      "location": "Doha, Qatar",
-      "rationale": "Appointed Group CEO in early 2024 following a career leading large Qatari transport institutions, Fahad now oversees a maritime and logistics group that recently signed AI and data platform partnerships with Google Cloud and Vendia, and received AEO accreditation from Qatar Customs in 2023 — all signals of active interest in digitising customs and dispatch workflows."
+      "rationale": "As Group MD, he sets GWC's portfolio diversification and trade facilitation strategy, including expansion into free zones and cross-border corridors. His mandate to support Qatar NVision 2030 supply chain goals makes him a key decision-maker for any platform touching customs clearance and dispatch coordination."
     },
     {
       "name": "Leon Diradourian",
-      "company": "Kuehne+Nagel GCC+ Cluster",
+      "company": "Kuehne+Nagel",
       "role": "Managing Director, GCC+ Cluster",
       "location": "Dubai, UAE",
-      "rationale": "Appointed in June 2025 to lead Kuehne+Nagel's newly unified GCC+ cluster spanning Qatar, UAE, Saudi Arabia, Kuwait, Oman, Bahrain, Iraq, and Jordan, Leon is the most senior decision-maker shaping freight forwarding technology strategy across the region — making him a critical voice on whether a customs and dispatch SaaS platform can be deployed across GCC markets."
+      "rationale": "Appointed June 2025 to lead all GCC operations including Qatar; his most recent role was VP of Strategic Customs Development overseeing the Farrow customs brokerage integration — making him one of the most contextually relevant executives to discuss customs documentation automation and its fit for mid-market GCC forwarders."
+    },
+    {
+      "name": "Mohammad Alkhas",
+      "company": "Aramex",
+      "role": "Chief Operating Officer — Freight and Logistics",
+      "location": "Dubai, UAE",
+      "rationale": "Leads Aramex's entire B2B freight forwarding and logistics operations across the GCC under the Accelerate28 transformation program; Aramex recently restructured its freight and last-mile units into separate P&Ls, making this an active moment to discuss operational tooling gaps in customs doc automation and last-mile dispatch."
+    },
+    {
+      "name": "Fadi Azzi",
+      "company": "Aramex",
+      "role": "Senior Logistics Director",
+      "location": "Dubai, UAE",
+      "rationale": "Publicly named as lead on Aramex's new healthcare logistics hub in Dubai South, handling integrated freight forwarding, customs clearance, and last-mile distribution for pharmaceutical and regulated goods — a high-complexity segment where documentation automation ROI is immediate and measurable."
     }
   ],
   "outreach": {
-    "target_name": "Jiju Haneef",
-    "subject": "Customs doc automation for your Ras Bufontas ops",
-    "body": "Jiju — congrats on the Ras Bufontas Free Zone launch last September; moving your first shipment out of a brand-new bonded facility while managing Baladna's full import/export is no small feat. We're building a B2B SaaS platform that automates customs documentation and last-mile dispatch coordination specifically for Qatari freight forwarders and 3PLs — the kind of workflow that becomes a real pressure point when you're scaling a new free zone facility alongside existing Hamad Port volumes. I'd love 20 minutes to understand where the documentation and dispatch bottlenecks are sharpest in your current setup, and whether what we're building is worth a closer look. Would a short call this week or next work for you?"
+    "target_name": "Leon Diradourian",
+    "subject": "Customs automation for your GCC+ footprint — quick question",
+    "body": "Leon — your background leading the Farrow customs brokerage integration at K+N before moving to the GCC makes you one of the few people who's seen both the technology and the operational side of customs documentation at scale. We're building a B2B SaaS platform that automates customs declaration workflows and last-mile dispatch coordination specifically for freight forwarders and 3PLs in the GCC, and Qatar is our launch market. Given you're now overseeing Qatar, Saudi, UAE, and six other countries from Dubai, I'd love 20 minutes to understand where the documentation and handoff pain sits hardest in your cluster. Would a call next week work?"
   },
-  "qatar_target_count": 4
+  "qatar_target_count": 2
 }

@@ -132,17 +132,42 @@ def validate_output(data: dict) -> None:
         print(f"[warn] Only {len(targets)}/5 call targets returned.", file=sys.stderr)
 
 
+def write_eml(outreach: dict, path: Path) -> None:
+    """Write outreach as a .eml draft file openable by any email client."""
+    import email.utils
+    from datetime import datetime, timezone
+
+    date_str = email.utils.format_datetime(datetime.now(timezone.utc))
+    eml = (
+        f"From: \n"
+        f"To: \n"
+        f"Subject: {outreach['subject']}\n"
+        f"Date: {date_str}\n"
+        f"MIME-Version: 1.0\n"
+        f"Content-Type: text/plain; charset=utf-8\n"
+        f"\n"
+        f"{outreach['body']}\n"
+    )
+    path.write_text(eml, encoding="utf-8")
+    print(f"[agent] Draft email written to {path}", file=sys.stderr)
+
+
 def main() -> None:
     """CLI entry point."""
     parser = argparse.ArgumentParser(
         description="Utopia Discovery Agent — market research + call targets + outreach",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog='Example:\n  python agent.py "B2B SaaS for Qatar logistics..."',
+        epilog='Example:\n  python agent.py "B2B SaaS for Qatar logistics..." --handoff',
     )
     parser.add_argument(
         "venture",
         nargs="?",
         help="Venture description (or pipe via stdin)",
+    )
+    parser.add_argument(
+        "--handoff",
+        action="store_true",
+        help="Write the outreach as a .eml draft file (opens in Mail / Outlook)",
     )
     args = parser.parse_args()
 
@@ -184,6 +209,15 @@ def main() -> None:
 
     # Print JSON to stdout
     print(output_json)
+
+    # --handoff: write outreach as a .eml draft
+    if args.handoff:
+        outreach = result.get("outreach", {})
+        if outreach:
+            eml_path = OUTPUT_DIR / f"{slug}-outreach.eml"
+            write_eml(outreach, eml_path)
+        else:
+            print("[warn] No outreach data in result — skipping .eml", file=sys.stderr)
 
 
 if __name__ == "__main__":
