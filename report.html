@@ -3,22 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Utopia Discovery Agent — Output</title>
+  <title>Utopia Discovery Agent</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0d0f14;
-      --surface: #161a22;
-      --surface2: #1e2330;
-      --border: #2a3040;
-      --accent: #6c63ff;
-      --accent2: #00d4aa;
-      --qatar: #8b1a2e;
+      --bg:          #0d0f14;
+      --surface:     #161a22;
+      --surface2:    #1e2330;
+      --border:      #2a3040;
+      --accent:      #6c63ff;
+      --accent2:     #00d4aa;
+      --qatar:       #8b1a2e;
       --qatar-light: #c0273e;
-      --text: #e8eaf0;
-      --muted: #7a8299;
-      --pill-bg: #1e2330;
+      --text:        #e8eaf0;
+      --muted:       #7a8299;
+      --green:       #4ade80;
+      --amber:       #fbbf24;
+      --red:         #f87171;
     }
 
     body {
@@ -26,10 +28,290 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.6;
-      padding: 0 0 80px;
+      min-height: 100vh;
     }
 
-    /* ── Header ─────────────────────────────────────────── */
+    /* ── Phase visibility ───────────────────────────────── */
+    #phase-input,
+    #phase-running,
+    #phase-results { display: none; }
+
+    body.state-input   #phase-input   { display: flex; }
+    body.state-running #phase-running { display: flex; }
+    body.state-results #phase-results { display: block; }
+
+    /* ─────────────────────────────────────────────────────
+       INPUT PHASE
+    ───────────────────────────────────────────────────── */
+    #phase-input {
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .input-wrap {
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .logo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .input-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .input-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+      max-width: 560px;
+    }
+
+    #venture-input {
+      width: 100%;
+      min-height: 160px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 18px 20px;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    #venture-input::placeholder { color: var(--muted); opacity: 0.7; }
+    #venture-input:focus { border-color: var(--accent); }
+
+    .input-hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+      opacity: 0.7;
+    }
+
+    .input-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 13px 30px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s, opacity 0.15s;
+      letter-spacing: 0.02em;
+    }
+    .btn-primary:hover:not(:disabled) { background: #7c74ff; transform: translateY(-1px); }
+    .btn-primary:active:not(:disabled) { transform: translateY(0); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ─────────────────────────────────────────────────────
+       RUNNING PHASE
+    ───────────────────────────────────────────────────── */
+    #phase-running {
+      min-height: 100vh;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 64px 24px 48px;
+    }
+
+    .running-wrap {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    .running-logo {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+    }
+
+    .venture-preview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      line-height: 1.55;
+    }
+    .venture-preview strong { color: var(--text); font-weight: 600; }
+
+    /* ── Steps ── */
+    .steps {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 48px;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 88px;
+      flex-shrink: 0;
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border);
+      background: var(--surface);
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .step.active   .step-icon { border-color: var(--accent);      background: rgba(108,99,255,0.12); }
+    .step.complete .step-icon { border-color: var(--green);        background: rgba(74,222,128,0.1);  }
+
+    .step-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+      transition: color 0.3s;
+    }
+    .step.active   .step-label { color: var(--accent); }
+    .step.complete .step-label { color: var(--green);  }
+
+    .step-connector {
+      flex: 1;
+      height: 2px;
+      background: var(--border);
+      margin-top: 20px;
+      transition: background 0.5s;
+      border-radius: 1px;
+    }
+    .step-connector.lit { background: var(--green); }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .spinning {
+      animation: spin 1.2s linear infinite;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* ── Terminal ── */
+    .terminal-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .terminal-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+    .terminal-dot.live {
+      animation: tdot 1.5s ease infinite;
+    }
+    @keyframes tdot {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.25; }
+    }
+    .terminal-dot.idle { background: var(--muted); animation: none; }
+
+    .terminal {
+      background: #060810;
+      border: 1px solid #1a2232;
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+      font-size: 12px;
+      color: #64d18a;
+      max-height: 340px;
+      min-height: 80px;
+      overflow-y: auto;
+      line-height: 1.8;
+      scroll-behavior: smooth;
+    }
+
+    .log-line        { display: block; }
+    .log-line.warn   { color: var(--amber); }
+    .log-line.err    { color: var(--red);   }
+    .log-line.info   { color: #60a5fa;      }
+    .log-line.muted  { color: #4a5568;      }
+
+    .error-box {
+      background: rgba(248,113,113,0.07);
+      border: 1px solid #f87171;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-top: 24px;
+      font-size: 13px;
+      color: var(--red);
+      white-space: pre-wrap;
+      display: none;
+    }
+
+    /* ─────────────────────────────────────────────────────
+       RESULTS PHASE
+    ───────────────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+    #phase-results.animating { animation: fadeUp 0.5s ease; }
+
+    /* ── Header ── */
     header {
       background: linear-gradient(135deg, #0d0f14 0%, #161a22 100%);
       border-bottom: 1px solid var(--border);
@@ -39,8 +321,11 @@
       justify-content: space-between;
       gap: 24px;
     }
+    @media (max-width: 700px) { header { flex-direction: column; padding: 24px; } }
+
     .header-left { flex: 1; }
-    .logo {
+
+    .header-logo {
       font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.18em;
@@ -48,6 +333,7 @@
       color: var(--accent);
       margin-bottom: 10px;
     }
+
     h1 {
       font-size: 26px;
       font-weight: 700;
@@ -55,12 +341,15 @@
       line-height: 1.3;
       max-width: 700px;
     }
+
     .header-meta {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       margin-top: 16px;
       flex-wrap: wrap;
+      align-items: center;
     }
+
     .badge {
       font-size: 11px;
       font-weight: 600;
@@ -69,19 +358,23 @@
       border-radius: 20px;
       border: 1px solid;
     }
-    .badge-model { color: var(--accent); border-color: var(--accent); background: rgba(108,99,255,.08); }
-    .badge-tool  { color: var(--accent2); border-color: var(--accent2); background: rgba(0,212,170,.08); }
-    .badge-qatar { color: #e05c72; border-color: var(--qatar-light); background: rgba(139,26,46,.15); }
-    .stat-row {
+    .badge-model { color: var(--accent);  border-color: var(--accent);      background: rgba(108,99,255,.08); }
+    .badge-tool  { color: var(--accent2); border-color: var(--accent2);     background: rgba(0,212,170,.08);  }
+    .badge-qatar { color: #e05c72;        border-color: var(--qatar-light);  background: rgba(139,26,46,.15);  }
+
+    .header-right {
       display: flex;
-      gap: 32px;
-      margin-top: 8px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
     }
+
+    .stat-row { display: flex; gap: 32px; }
     .stat { text-align: right; }
-    .stat-n { font-size: 36px; font-weight: 800; color: var(--accent2); line-height: 1; }
+    .stat-n     { font-size: 36px; font-weight: 800; color: var(--accent2); line-height: 1; }
     .stat-label { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; text-transform: uppercase; }
 
-    /* ── Layout ─────────────────────────────────────────── */
+    /* ── Main layout ── */
     main {
       max-width: 1100px;
       margin: 0 auto;
@@ -90,7 +383,7 @@
       gap: 40px;
     }
 
-    /* ── Section titles ──────────────────────────────────── */
+    /* ── Section titles ── */
     .section-title {
       font-size: 11px;
       font-weight: 700;
@@ -102,14 +395,9 @@
       align-items: center;
       gap: 10px;
     }
-    .section-title::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    /* ── Market Brief ────────────────────────────────────── */
+    /* ── Market Brief ── */
     .brief-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -123,6 +411,7 @@
       border-radius: 12px;
       padding: 24px;
     }
+
     .brief-card-title {
       font-size: 11px;
       font-weight: 700;
@@ -130,7 +419,7 @@
       text-transform: uppercase;
       margin-bottom: 16px;
     }
-    .brief-card-title.seg  { color: var(--accent); }
+    .brief-card-title.seg  { color: var(--accent);  }
     .brief-card-title.pain { color: #f0a040; }
     .brief-card-title.play { color: var(--accent2); }
 
@@ -145,28 +434,18 @@
     .brief-list li::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 8px;
-      width: 5px;
-      height: 5px;
+      left: 0; top: 8px;
+      width: 5px; height: 5px;
       border-radius: 50%;
     }
-    .seg  li::before { background: var(--accent); }
-    .pain li::before { background: #f0a040; }
-    .play li::before { background: var(--accent2); }
+    .seg  li::before { background: var(--accent);  }
+    .pain li::before { background: #f0a040;         }
+    .play li::before { background: var(--accent2);  }
 
-    .player-name {
-      font-weight: 600;
-      color: var(--text);
-      font-size: 13px;
-    }
-    .player-desc {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 2px;
-    }
+    .player-name { font-weight: 600; color: var(--text); font-size: 13px; }
+    .player-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
-    /* ── Targets ─────────────────────────────────────────── */
+    /* ── Call Targets ── */
     .targets-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -184,16 +463,12 @@
     .target-card:hover { border-color: var(--accent); transform: translateY(-2px); }
     .target-card.qatar-card { border-left: 3px solid var(--qatar-light); }
 
-    .qatar-flag {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: 18px;
-    }
+    .qatar-flag { position: absolute; top: 16px; right: 16px; font-size: 18px; }
 
-    .target-name { font-size: 16px; font-weight: 700; color: var(--text); }
-    .target-role { font-size: 12px; color: var(--accent); margin-top: 2px; font-weight: 500; }
+    .target-name    { font-size: 16px; font-weight: 700; color: var(--text); }
+    .target-role    { font-size: 12px; color: var(--accent); margin-top: 2px; font-weight: 500; }
     .target-company { font-size: 13px; color: var(--muted); margin-top: 1px; }
+
     .target-location {
       display: inline-flex;
       align-items: center;
@@ -208,6 +483,7 @@
       color: var(--muted);
     }
     .target-location.qatar-loc { color: #e05c72; border-color: var(--qatar-light); background: rgba(139,26,46,.15); }
+
     .target-rationale {
       font-size: 12.5px;
       color: #9aa0b5;
@@ -217,13 +493,14 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ── Outreach ─────────────────────────────────────────── */
+    /* ── Outreach ── */
     .outreach-card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
     }
+
     .email-header {
       background: var(--surface2);
       border-bottom: 1px solid var(--border);
@@ -233,220 +510,491 @@
       gap: 8px 16px;
       align-items: baseline;
     }
-    .email-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .email-value { font-size: 13px; color: var(--text); }
+    .email-label   { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .email-value   { font-size: 13px; color: var(--text); }
     .email-subject { font-size: 14px; font-weight: 600; color: var(--accent2); }
+
     .email-body {
       padding: 28px;
       font-size: 14px;
       color: #c4c9d8;
-      line-height: 1.75;
+      line-height: 1.8;
       white-space: pre-wrap;
     }
 
-    /* ── Footer ─────────────────────────────────────────── */
+    /* ── Footer ── */
     footer {
       text-align: center;
       margin-top: 60px;
+      padding-bottom: 80px;
       font-size: 12px;
       color: var(--muted);
     }
     footer span { color: var(--accent); font-weight: 600; }
   </style>
 </head>
-<body>
+<body class="state-input">
 
-<header>
-  <div class="header-left">
+<!-- ══════════════════════════════════════════
+     PHASE 1 — INPUT
+══════════════════════════════════════════ -->
+<div id="phase-input">
+  <div class="input-wrap">
     <div class="logo">Utopia Studio · Discovery Agent</div>
-    <h1>Qatar GCC Logistics SaaS — M2 Discovery Brief</h1>
-    <div class="header-meta">
-      <span class="badge badge-model">claude-sonnet-4-6</span>
-      <span class="badge badge-tool">web_search_20250305</span>
-      <span class="badge badge-qatar">4 Qatar targets</span>
+    <h2 class="input-title">Find your call targets.</h2>
+    <p class="input-subtitle">
+      Paste a venture description. The agent researches the market, identifies key decision-makers,
+      and drafts personalised outreach — powered by Claude + live web search.
+    </p>
+    <textarea
+      id="venture-input"
+      placeholder="e.g. B2B SaaS platform helping Qatar logistics companies automate customs documentation and last-mile dispatch coordination..."
+    ></textarea>
+    <p class="input-hint">Tip: ⌘ Enter or Ctrl+Enter to run</p>
+    <div class="input-actions">
+      <button class="btn-primary" id="run-btn" onclick="startAgent()">
+        Run Discovery Agent →
+      </button>
     </div>
   </div>
-  <div class="stat-row">
-    <div class="stat">
-      <div class="stat-n">5</div>
-      <div class="stat-label">Call Targets</div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PHASE 2 — RUNNING
+══════════════════════════════════════════ -->
+<div id="phase-running">
+  <div class="running-wrap">
+    <div class="running-logo">Utopia Studio · Discovery Agent</div>
+
+    <div class="venture-preview">
+      <strong>Researching:</strong>&nbsp;<span id="venture-preview-text"></span>
     </div>
-    <div class="stat">
-      <div class="stat-n">4</div>
-      <div class="stat-label">Qatar-based</div>
+
+    <!-- Progress steps -->
+    <div class="steps">
+      <div class="step" id="step-0">
+        <div class="step-icon" id="step-icon-0"></div>
+        <div class="step-label">Connecting</div>
+      </div>
+      <div class="step-connector" id="connector-0"></div>
+
+      <div class="step" id="step-1">
+        <div class="step-icon" id="step-icon-1"></div>
+        <div class="step-label">Researching</div>
+      </div>
+      <div class="step-connector" id="connector-1"></div>
+
+      <div class="step" id="step-2">
+        <div class="step-icon" id="step-icon-2"></div>
+        <div class="step-label">Compiling</div>
+      </div>
+      <div class="step-connector" id="connector-2"></div>
+
+      <div class="step" id="step-3">
+        <div class="step-icon" id="step-icon-3"></div>
+        <div class="step-label">Done</div>
+      </div>
     </div>
+
+    <!-- Terminal output -->
+    <div class="terminal-header">
+      <div class="terminal-dot" id="terminal-dot"></div>
+      Raw output
+    </div>
+    <div class="terminal" id="terminal-log"></div>
+
+    <div class="error-box" id="error-box"></div>
   </div>
-</header>
+</div>
 
-<main>
+<!-- ══════════════════════════════════════════
+     PHASE 3 — RESULTS
+══════════════════════════════════════════ -->
+<div id="phase-results">
 
-  <!-- Market Brief -->
-  <section>
-    <div class="section-title">Market Brief</div>
-    <div class="brief-grid">
-
-      <div class="brief-card">
-        <div class="brief-card-title seg">Segments</div>
-        <ul class="brief-list seg" id="segments"></ul>
+  <header>
+    <div class="header-left">
+      <div class="header-logo">Utopia Studio · Discovery Agent</div>
+      <h1 id="report-title">Discovery Brief</h1>
+      <div class="header-meta">
+        <span class="badge badge-model">claude-sonnet-4-6</span>
+        <span class="badge badge-tool">web_search_20250305</span>
+        <span class="badge badge-qatar" id="qatar-badge"></span>
       </div>
-
-      <div class="brief-card">
-        <div class="brief-card-title pain">Pain Points</div>
-        <ul class="brief-list pain" id="pain_points"></ul>
-      </div>
-
-      <div class="brief-card">
-        <div class="brief-card-title play">Key Players</div>
-        <ul class="brief-list play" id="key_players"></ul>
-      </div>
-
     </div>
-  </section>
-
-  <!-- Call Targets -->
-  <section>
-    <div class="section-title">Call Targets</div>
-    <div class="targets-grid" id="targets"></div>
-  </section>
-
-  <!-- Outreach -->
-  <section>
-    <div class="section-title">Outreach Draft</div>
-    <div class="outreach-card">
-      <div class="email-header">
-        <span class="email-label">To</span>
-        <span class="email-value" id="outreach-to"></span>
-        <span class="email-label">Subject</span>
-        <span class="email-value email-subject" id="outreach-subject"></span>
+    <div class="header-right">
+      <div class="stat-row">
+        <div class="stat">
+          <div class="stat-n" id="stat-targets">—</div>
+          <div class="stat-label">Call Targets</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n" id="stat-qatar">—</div>
+          <div class="stat-label">Qatar-based</div>
+        </div>
       </div>
-      <div class="email-body" id="outreach-body"></div>
+      <button class="btn-secondary" onclick="newSearch()">← New search</button>
     </div>
-  </section>
+  </header>
 
-</main>
+  <main>
 
-<footer>Generated by <span>Utopia Discovery Agent</span> · Anthropic Claude + web_search</footer>
+    <!-- Market Brief -->
+    <section>
+      <div class="section-title">Market Brief</div>
+      <div class="brief-grid">
+        <div class="brief-card">
+          <div class="brief-card-title seg">Segments</div>
+          <ul class="brief-list seg" id="segments"></ul>
+        </div>
+        <div class="brief-card">
+          <div class="brief-card-title pain">Pain Points</div>
+          <ul class="brief-list pain" id="pain_points"></ul>
+        </div>
+        <div class="brief-card">
+          <div class="brief-card-title play">Key Players</div>
+          <ul class="brief-list play" id="key_players"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call Targets -->
+    <section>
+      <div class="section-title">Call Targets</div>
+      <div class="targets-grid" id="targets"></div>
+    </section>
+
+    <!-- Outreach Draft -->
+    <section>
+      <div class="section-title">Outreach Draft</div>
+      <div class="outreach-card">
+        <div class="email-header">
+          <span class="email-label">To</span>
+          <span class="email-value" id="outreach-to"></span>
+          <span class="email-label">Subject</span>
+          <span class="email-value email-subject" id="outreach-subject"></span>
+        </div>
+        <div class="email-body" id="outreach-body"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>Generated by <span>Utopia Discovery Agent</span> · Anthropic Claude + web_search</footer>
+</div>
 
 <script>
-const DATA = {
-  "market_brief": {
-    "segments": [
-      "Mid-size Qatari freight forwarders managing multi-modal customs documentation manually (air, sea, and land)",
-      "Third-party logistics (3PL) operators running last-mile dispatch and e-commerce fulfilment out of Doha and Qatar Free Zones",
-      "Oil & gas and industrial sector importers relying on bonded warehouse and AEO customs workflows",
-      "Food & FMCG supply chain operators dependent on time-sensitive customs clearance through Hamad Port",
-      "SME importers and exporters entering or scaling across GCC markets via Qatar as a transshipment hub"
-    ],
-    "pain_points": [
-      "Heavy reliance on manual, paper-based customs documentation leads to high error rates and clearance delays — automated document processing can cut manual entry errors from ~40% to under 1%, but most Qatari forwarders have not yet adopted such tools",
-      "System fragmentation: different stakeholders across the logistics chain use incompatible platforms, making data sharing between freight forwarders, customs authorities, and 3PLs complex and error-prone",
-      "Last-mile dispatch coordination remains largely manual and phone-driven, causing backhauling inefficiencies and missed delivery windows — road operators face margin squeeze from back-haul deficits",
-      "Regulatory compliance complexity: Qatari customs procedures, AEO requirements, and evolving GCC trade regulations require constant manual monitoring, creating non-compliance risk and demurrage exposure",
-      "Throughput pressure at Hamad Port (557,464 TEUs in 2023 alone) is straining existing documentation workflows, while inland logistics parks at Umm Salal and Bu Fasseela still lack integrated digital customs infrastructure"
-    ],
-    "key_players": [
-      "GWC (Gulf Warehousing Company): Qatar's largest 3PL and logistics provider with 3.8M sqm of infrastructure, GCC AEO status, and active investment in AI and e-commerce logistics automation",
-      "Milaha (Qatar Navigation Q.P.S.C.): Qatar's oldest and most diversified maritime and logistics group, recently accredited as AEO by Qatar Customs and actively building AI and Google Cloud-powered logistics capabilities",
-      "Bin Yousef Cargo: Long-established Doha-based freight forwarder and 3PL with AEO accreditation, TIR certification, and recently opened Ras Bufontas Free Zone warehouse",
-      "Kuehne+Nagel Qatar: Global freight forwarding leader with a Doha office, strong air and sea logistics capabilities, and recently unified under a new GCC+ cluster management structure",
-      "CargoWise / Descartes Systems: Global logistics SaaS platforms used by large forwarders for customs compliance and documentation automation — not yet deeply embedded in mid-tier Qatari market"
-    ]
+// ── SVG icons ─────────────────────────────────────────────────
+const ICON = {
+  pending() {
+    return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="7" stroke="#2a3040" stroke-width="1.8"/>
+    </svg>`;
   },
-  "call_targets": [
-    {
-      "name": "Jiju Haneef",
-      "company": "Bin Yousef Cargo",
-      "role": "Director, Cargo Operations",
-      "location": "Doha, Qatar",
-      "rationale": "Jiju is the operational decision-maker for one of Qatar's longest-standing independent freight forwarders. He was publicly quoted at the September 2025 opening of their new Ras Bufontas Free Zone warehouse — a facility handling import/export for Baladna and expanding 3PL services — making him a direct buyer of customs documentation and last-mile dispatch tools."
-    },
-    {
-      "name": "Matthew Kearns",
-      "company": "GWC (Gulf Warehousing Company)",
-      "role": "Group CEO",
-      "location": "Doha, Qatar",
-      "rationale": "As the newly appointed Group CEO of Qatar's dominant 3PL, Matthew has publicly stated that GWC's priority is transforming its assets into an integrated logistics platform with AI, automation, and e-commerce dispatch. His Q1 2026 commentary explicitly called out documentation and dispatch coordination under regional disruption as key operational pressure points."
-    },
-    {
-      "name": "Bradley Francis",
-      "company": "Kuehne+Nagel Qatar",
-      "role": "Managing Director, Qatar",
-      "location": "Doha, Qatar",
-      "rationale": "Bradley was appointed MD of Kuehne+Nagel Qatar in 2023 and has been growing the country operation's air and sea forwarding capabilities with a strong focus on end-to-end supply chain visibility. His role overseeing Qatar operations within the newly formed GCC+ cluster (effective June 2025) makes him a valuable voice on customs automation needs across multi-market freight flows."
-    },
-    {
-      "name": "Fahad bin Saad Al-Qahtani",
-      "company": "Milaha (Qatar Navigation Q.P.S.C.)",
-      "role": "Group CEO",
-      "location": "Doha, Qatar",
-      "rationale": "Appointed Group CEO in early 2024 following a career leading large Qatari transport institutions, Fahad now oversees a maritime and logistics group that recently signed AI and data platform partnerships with Google Cloud and Vendia, and received AEO accreditation from Qatar Customs in 2023 — all signals of active interest in digitising customs and dispatch workflows."
-    },
-    {
-      "name": "Leon Diradourian",
-      "company": "Kuehne+Nagel GCC+ Cluster",
-      "role": "Managing Director, GCC+ Cluster",
-      "location": "Dubai, UAE",
-      "rationale": "Appointed in June 2025 to lead Kuehne+Nagel's newly unified GCC+ cluster spanning Qatar, UAE, Saudi Arabia, Kuwait, Oman, Bahrain, Iraq, and Jordan, Leon is the most senior decision-maker shaping freight forwarding technology strategy across the region — making him a critical voice on whether a customs and dispatch SaaS platform can be deployed across GCC markets."
-    }
-  ],
-  "outreach": {
-    "target_name": "Jiju Haneef",
-    "subject": "Customs doc automation for your Ras Bufontas ops",
-    "body": "Jiju — congrats on the Ras Bufontas Free Zone launch last September; moving your first shipment out of a brand-new bonded facility while managing Baladna's full import/export is no small feat. We're building a B2B SaaS platform that automates customs documentation and last-mile dispatch coordination specifically for Qatari freight forwarders and 3PLs — the kind of workflow that becomes a real pressure point when you're scaling a new free zone facility alongside existing Hamad Port volumes. I'd love 20 minutes to understand where the documentation and dispatch bottlenecks are sharpest in your current setup, and whether what we're building is worth a closer look. Would a short call this week or next work for you?"
+  active() {
+    return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="7" stroke="#1e2330" stroke-width="1.8"/>
+      <path class="spinning" d="M9 2 A7 7 0 0 1 16 9" stroke="#6c63ff" stroke-width="2" stroke-linecap="round"/>
+    </svg>`;
   },
-  "qatar_target_count": 4
+  complete() {
+    return `<svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+      <circle cx="9" cy="9" r="8" fill="rgba(74,222,128,0.13)" stroke="#4ade80" stroke-width="1.5"/>
+      <path d="M5.5 9.5 L7.8 12 L12.5 6.5" stroke="#4ade80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>`;
+  },
 };
 
-// Segments
-DATA.market_brief.segments.forEach(s => {
-  const li = document.createElement('li');
-  li.textContent = s;
-  document.getElementById('segments').appendChild(li);
-});
+// ── Step state machine ────────────────────────────────────────
+const TOTAL_STEPS = 4;
+let currentStep = -1;
 
-// Pain points
-DATA.market_brief.pain_points.forEach(p => {
-  const li = document.createElement('li');
-  li.textContent = p;
-  document.getElementById('pain_points').appendChild(li);
-});
+function initSteps() {
+  currentStep = -1;
+  for (let i = 0; i < TOTAL_STEPS; i++) {
+    const stepEl = document.getElementById(`step-${i}`);
+    stepEl.classList.remove('active', 'complete');
+    document.getElementById(`step-icon-${i}`).innerHTML = ICON.pending();
+    const conn = document.getElementById(`connector-${i}`);
+    if (conn) conn.classList.remove('lit');
+  }
+}
 
-// Key players
-DATA.market_brief.key_players.forEach(p => {
-  const [name, ...rest] = p.split(':');
-  const li = document.createElement('li');
-  li.innerHTML = `<div class="player-name">${name.trim()}</div><div class="player-desc">${rest.join(':').trim()}</div>`;
-  document.getElementById('key_players').appendChild(li);
-});
+function activateStep(n) {
+  if (currentStep >= n) return;
 
-// Targets
-DATA.call_targets.forEach(t => {
-  const isQatar = t.location.includes('Qatar') || t.location.includes('Doha');
-  const card = document.createElement('div');
-  card.className = 'target-card' + (isQatar ? ' qatar-card' : '');
-  card.innerHTML = `
-    ${isQatar ? '<div class="qatar-flag">🇶🇦</div>' : ''}
-    <div class="target-name">${t.name}</div>
-    <div class="target-role">${t.role}</div>
-    <div class="target-company">${t.company}</div>
-    <div class="target-location ${isQatar ? 'qatar-loc' : ''}">
-      📍 ${t.location}
-    </div>
-    <div class="target-rationale">${t.rationale}</div>
-  `;
-  document.getElementById('targets').appendChild(card);
-});
+  // Complete everything before n
+  for (let i = 0; i < n; i++) {
+    const el = document.getElementById(`step-${i}`);
+    el.classList.remove('active');
+    el.classList.add('complete');
+    document.getElementById(`step-icon-${i}`).innerHTML = ICON.complete();
+    const conn = document.getElementById(`connector-${i}`);
+    if (conn) conn.classList.add('lit');
+  }
 
-// Outreach
-document.getElementById('outreach-to').textContent = DATA.outreach.target_name;
-document.getElementById('outreach-subject').textContent = DATA.outreach.subject;
-document.getElementById('outreach-body').textContent = DATA.outreach.body;
+  // Activate step n
+  const el = document.getElementById(`step-${n}`);
+  el.classList.remove('complete');
+  el.classList.add('active');
+  document.getElementById(`step-icon-${n}`).innerHTML = ICON.active();
+
+  currentStep = n;
+}
+
+function completeAllSteps() {
+  for (let i = 0; i < TOTAL_STEPS; i++) {
+    const el = document.getElementById(`step-${i}`);
+    el.classList.remove('active');
+    el.classList.add('complete');
+    document.getElementById(`step-icon-${i}`).innerHTML = ICON.complete();
+    const conn = document.getElementById(`connector-${i}`);
+    if (conn) conn.classList.add('lit');
+  }
+  currentStep = TOTAL_STEPS - 1;
+  const dot = document.getElementById('terminal-dot');
+  dot.classList.remove('live');
+  dot.classList.add('idle');
+}
+
+// ── Terminal log ──────────────────────────────────────────────
+function clearLog() {
+  document.getElementById('terminal-log').innerHTML = '';
+}
+
+function appendLog(line) {
+  const el = document.getElementById('terminal-log');
+  const span = document.createElement('span');
+  span.className = 'log-line';
+
+  const low = line.toLowerCase();
+  if (line.startsWith('[warn]') || low.includes('warn')) {
+    span.classList.add('warn');
+  } else if (line.startsWith('[agent]')) {
+    span.classList.add('info');
+  } else if (low.startsWith('error') || low.includes('traceback') || low.includes('exception')) {
+    span.classList.add('err');
+  }
+
+  span.textContent = line || '​'; // zero-width space for empty lines
+  el.appendChild(span);
+  el.appendChild(document.createTextNode('\n'));
+  el.scrollTop = el.scrollHeight;
+}
+
+// ── Progress update from log lines ───────────────────────────
+function updateProgress(line) {
+  if (line.includes('[agent] model=') || line.includes('[agent] venture=')) {
+    activateStep(0);
+  }
+  if (/turn \d\/\d/.test(line)) {
+    activateStep(1);
+  }
+  if (line.includes('stop_reason=end_turn') || line.includes('Qatar targets')) {
+    activateStep(2);
+  }
+  if (line.includes('Written to')) {
+    activateStep(3);
+  }
+}
+
+// ── SSE stream parser ─────────────────────────────────────────
+function parseSSEBuffer(buffer) {
+  const events = [];
+  const blocks = buffer.split('\n\n');
+  const remaining = blocks.pop() ?? '';
+
+  for (const block of blocks) {
+    if (!block.trim()) continue;
+    let event = 'message', data = '';
+    for (const line of block.trim().split('\n')) {
+      if (line.startsWith('event: ')) event = line.slice(7).trim();
+      else if (line.startsWith('data: '))  data  = line.slice(6);
+    }
+    if (data) events.push({ event, data });
+  }
+
+  return { events, remaining };
+}
+
+// ── Phase switching ───────────────────────────────────────────
+function showPhase(name) {
+  document.body.className = 'state-' + name;
+  if (name === 'results') {
+    const el = document.getElementById('phase-results');
+    el.classList.add('animating');
+    setTimeout(() => el.classList.remove('animating'), 600);
+  }
+}
+
+// ── Main agent runner ─────────────────────────────────────────
+async function startAgent() {
+  const venture = document.getElementById('venture-input').value.trim();
+  if (!venture) return;
+
+  if (window.location.protocol === 'file:') {
+    alert(
+      'Please run the local server first:\n\n' +
+      '  python server.py\n\n' +
+      'Then open http://localhost:7432 in your browser.'
+    );
+    return;
+  }
+
+  // Prep running phase
+  document.getElementById('venture-preview-text').textContent =
+    venture.length > 130 ? venture.slice(0, 130) + '…' : venture;
+
+  const dot = document.getElementById('terminal-dot');
+  dot.classList.remove('idle');
+  dot.classList.add('live');
+
+  document.getElementById('error-box').style.display = 'none';
+  clearLog();
+  initSteps();
+  activateStep(0);
+  showPhase('running');
+
+  document.getElementById('run-btn').disabled = true;
+
+  try {
+    const resp = await fetch('/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ venture }),
+    });
+
+    if (!resp.ok) throw new Error(`Server returned HTTP ${resp.status}`);
+
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const { events, remaining } = parseSSEBuffer(buffer);
+      buffer = remaining;
+
+      for (const { event, data } of events) {
+        let parsed;
+        try { parsed = JSON.parse(data); } catch { parsed = data; }
+
+        if (event === 'log') {
+          appendLog(parsed);
+          updateProgress(parsed);
+        } else if (event === 'result') {
+          const json = typeof parsed === 'string' ? JSON.parse(parsed) : parsed;
+          completeAllSteps();
+          setTimeout(() => renderResults(json, venture), 500);
+        } else if (event === 'error') {
+          appendLog('ERROR: ' + parsed);
+          const box = document.getElementById('error-box');
+          box.textContent = 'Agent error: ' + parsed;
+          box.style.display = 'block';
+        }
+      }
+    }
+  } catch (err) {
+    appendLog('ERROR: ' + err.message);
+    const box = document.getElementById('error-box');
+    box.textContent = err.message;
+    box.style.display = 'block';
+  } finally {
+    document.getElementById('run-btn').disabled = false;
+  }
+}
+
+// ── Render results ────────────────────────────────────────────
+function esc(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderResults(data, venture) {
+  // Clear previous data
+  ['segments', 'pain_points', 'key_players', 'targets'].forEach(id => {
+    document.getElementById(id).innerHTML = '';
+  });
+
+  // Header
+  const title = venture
+    ? (venture.length > 80 ? venture.slice(0, 80) + '…' : venture)
+    : 'Discovery Brief';
+  document.getElementById('report-title').textContent = title;
+
+  const targets = data.call_targets ?? [];
+  const qatarCount = data.qatar_target_count ?? 0;
+  document.getElementById('stat-targets').textContent = targets.length;
+  document.getElementById('stat-qatar').textContent   = qatarCount;
+  document.getElementById('qatar-badge').textContent  =
+    `${qatarCount} Qatar target${qatarCount !== 1 ? 's' : ''}`;
+
+  const brief = data.market_brief ?? {};
+
+  // Segments
+  (brief.segments ?? []).forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = s;
+    document.getElementById('segments').appendChild(li);
+  });
+
+  // Pain points
+  (brief.pain_points ?? []).forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p;
+    document.getElementById('pain_points').appendChild(li);
+  });
+
+  // Key players
+  (brief.key_players ?? []).forEach(p => {
+    const idx = p.indexOf(':');
+    const name = idx > -1 ? p.slice(0, idx).trim() : p;
+    const desc = idx > -1 ? p.slice(idx + 1).trim() : '';
+    const li = document.createElement('li');
+    li.innerHTML = `<div class="player-name">${esc(name)}</div>`
+                 + (desc ? `<div class="player-desc">${esc(desc)}</div>` : '');
+    document.getElementById('key_players').appendChild(li);
+  });
+
+  // Call targets
+  targets.forEach(t => {
+    const loc = t.location ?? '';
+    const isQatar = loc.includes('Qatar') || loc.includes('Doha');
+    const card = document.createElement('div');
+    card.className = 'target-card' + (isQatar ? ' qatar-card' : '');
+    card.innerHTML = (isQatar ? '<div class="qatar-flag">🇶🇦</div>' : '')
+      + `<div class="target-name">${esc(t.name)}</div>`
+      + `<div class="target-role">${esc(t.role)}</div>`
+      + `<div class="target-company">${esc(t.company)}</div>`
+      + `<div class="target-location ${isQatar ? 'qatar-loc' : ''}">📍 ${esc(loc)}</div>`
+      + `<div class="target-rationale">${esc(t.rationale)}</div>`;
+    document.getElementById('targets').appendChild(card);
+  });
+
+  // Outreach
+  const outreach = data.outreach ?? {};
+  document.getElementById('outreach-to').textContent      = outreach.target_name ?? '';
+  document.getElementById('outreach-subject').textContent = outreach.subject ?? '';
+  document.getElementById('outreach-body').textContent    = outreach.body ?? '';
+
+  showPhase('results');
+}
+
+// ── New search ────────────────────────────────────────────────
+function newSearch() {
+  showPhase('input');
+}
+
+// ── Keyboard shortcut: ⌘+Enter / Ctrl+Enter ──────────────────
+document.getElementById('venture-input').addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') startAgent();
+});
 </script>
 </body>
 </html>

@@ -16,8 +16,18 @@ cp .env.example .env
 
 ## How to run
 
+### Web UI (recommended)
+
 ```bash
-python agent.py "<venture description>"
+python3 server.py
+```
+
+Then open **http://localhost:7432** in your browser. Paste a venture description, click **Run Discovery Agent**, and watch the agent work in real time — live terminal output, animated progress steps, and the full report rendered when it finishes.
+
+### CLI
+
+```bash
+python3 agent.py "<venture description>"
 ```
 
 Output is printed to **stdout** as JSON and saved to `output/<venture-slug>.json`.
@@ -25,7 +35,7 @@ Output is printed to **stdout** as JSON and saved to `output/<venture-slug>.json
 ## Example command
 
 ```bash
-python agent.py "B2B SaaS platform helping Qatar logistics companies automate customs documentation and last-mile dispatch coordination, targeting freight forwarders and 3PLs in the GCC."
+python3 agent.py "B2B SaaS platform helping Qatar logistics companies automate customs documentation and last-mile dispatch coordination, targeting freight forwarders and 3PLs in the GCC."
 ```
 
 ## Model
@@ -96,6 +106,8 @@ See `output/` for a real sample run.
 
 ```
 agent.py          Main CLI script
+server.py         Local web server for the browser UI
+report.html       Browser UI (input form → live progress → rendered report)
 prompts/
   system.md       System prompt shown to Claude
 requirements.txt
